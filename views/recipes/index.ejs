@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Recipes</title>
+  </head>
+  <body>
+    <%- include('../partials/_navbar.ejs') %>
+     <h1>Welcome to My Recipes</h1>
+    <a href="/recipes/new">Add New Recipe</a>
+    <!-- Use conditional rendering to display a list of recipes or a message 
+    that reads "You have not created any recipes yet." -->
+    <% if(recipes.length) { %>
+      <% recipes.forEach(recipe=> { %>
+        <div>
+          <a href="/recipes/<%= recipe._id %>">
+            <h2>
+              <%= recipe.name %>
+            </h2>
+          </a>
+          <!--  s -->
+          <% if(recipe.ingredients && recipe.ingredients.length > 0) { %>
+            <p>Ingredients: <%= recipe.ingredients.map(i => i.name).join(', ') %></p>
+        <% } %>
+          <a href="/recipes/<%= recipe._id %>/edit">
+            Edit
+          </a>
+          <form action="/recipes/<%= recipe._id %>?_method=DELETE" method="POST">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>You have not created any recipes.</p>
+    <% } %>
+   
+   
+  </body>
+</html>
